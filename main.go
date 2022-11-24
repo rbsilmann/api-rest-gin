@@ -9,14 +9,26 @@ import (
 )
 
 func main() {
+	// Read .env
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	// Test package godotenv using variable TEST in .env
 	// fmt.Println(os.Getenv("TEST"))
+
+	// Init router using gin default (logger and recovery middlewares)
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup)
-	if err := router.Run(":8080"); err != nil {
+
+	// Syntax #1
+	// if err := router.Run(":8080"); err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// Syntax #2
+	err = router.Run(":8080")
+	if err != nil {
 		log.Fatal(err)
 	}
 }
